@@ -1,7 +1,9 @@
 <?php
 namespace Aura\SqlSchema;
 
-abstract class AbstractSchemaTest extends \PHPUnit_Framework_TestCase
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
+abstract class AbstractSchemaTest extends TestCase
 {
     protected $extension;
 
@@ -9,13 +11,15 @@ abstract class AbstractSchemaTest extends \PHPUnit_Framework_TestCase
 
     protected $schema;
 
+    protected $setup;
+
     protected $expect_fetch_table_list;
 
     protected $expect_fetch_table_cols;
 
     protected $expect_quote_name = '"one"."two"';
 
-    public function setUp()
+    protected function set_up()
     {
         // skip if we don't have the extension
         if (! extension_loaded($this->extension)) {
