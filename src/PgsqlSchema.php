@@ -109,7 +109,7 @@ class PgsqlSchema extends AbstractSchema
                 ($scale ? (int) $scale : null),
                 (bool) ($val['notnull']),
                 $this->getDefault($val['default']),
-                (bool) (substr($val['default'], 0, 7) == 'nextval'),
+                (bool) ($val['default'] !== null && substr($val['default'], 0, 7) == 'nextval'),
                 (bool) ($val['primary'])
             );
         }
@@ -132,6 +132,10 @@ class PgsqlSchema extends AbstractSchema
      */
     protected function getDefault($default)
     {
+        if ($default === null) {
+            return null;
+        }
+
         // numeric literal?
         if (is_numeric($default)) {
             return $default;

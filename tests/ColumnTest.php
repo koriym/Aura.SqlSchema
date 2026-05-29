@@ -76,12 +76,12 @@ EXPECT;
             $expect = str_replace('   ', '  ', $expect);
         }
 
-        // check the export
-        $this->assertSame($expect, $actual);
+        // check the export; PHP 8.2+ prefixes class names with a leading slash.
+        $this->assertSame($expect, ltrim($actual, '\\'));
 
         // check __set_state() directly
         $col = Column::__set_state($info);
         $actual = var_export($col, true);
-        $this->assertSame($expect, $actual);
+        $this->assertSame($expect, ltrim($actual, '\\'));
     }
 }

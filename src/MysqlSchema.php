@@ -118,6 +118,10 @@ class MysqlSchema extends AbstractSchema
      */
     protected function getDefault($default)
     {
+        if ($default === null) {
+            return null;
+        }
+
         $upper = strtoupper($default);
         if ($upper == 'NULL' || $upper == 'CURRENT_TIMESTAMP') {
             // the only non-literal allowed by MySQL is "CURRENT_TIMESTAMP"
